@@ -1,0 +1,55 @@
+{% extends "home.html" %} {% load static %}
+{% block title %}Create ORE User{% endblock title %}
+{% block breadcrumbbar %}
+
+<!-- Start Breadcrumbbar -->
+
+<div class="breadcrumbbar bg-transparent">
+</div>
+
+<!-- End Breadcrumbbar -->
+
+{% endblock breadcrumbbar %}
+
+
+{% block content %}
+<div class="contentbar dark-outer-color-theme pt-5">
+  <div class="row justify-content-center dark-outer-color-theme">
+ 
+
+<form  method="post" accept-charset="utf-8"  class="col"
+    action="{% url 'users:create-ore-user' %}"
+    autocomplete="off">
+    <div class="card details-card bgc-none">
+        <h2 class="card-header header-bgc header-box-shadow py-0">Create ORE User</h2>
+
+        <div class="card-body py-0 ">
+            {% csrf_token %}
+            <div class="form-row">
+                {% include 'form_repeat.html' with f=form.name f_label="Name" col_md="4" exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.user_name f_label="User Name" col_md="4"  exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.email f_label="Email" col_md="4"  exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.picture f_label="Picture" col_md="4"  exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.user_password f_label="Password" col_md="4"  exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.phone f_label="Phone" col_md="4"  exclass="m-0" %}
+                {% include 'form_repeat.html' with f=form.account_type f_label="Account Type" col_md="4"  exclass="m-0" %}
+
+
+                <div class="form-group col-md-4 m-0 text-center">
+                    <label for="" class="col-sm-12  col-form-label font-weight-bold text-nowrap dark-theme-text">Save</label>
+                    <input type="submit" class="btn btn-outline-primary" value="Save">
+                </div>
+                <div class="form-group col-md-4 m-0  text-center">
+                    <label for="" class="col-sm-12  col-form-label font-weight-bold text-nowrap dark-theme-text">Reset</label>
+                    <input type="reset" class="btn btn-outline-dark" value="Reset" name="reset">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+  </div>
+</div>
+
+{% endblock content %}

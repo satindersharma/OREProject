@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} DashBoard {% endblock title %} 
+{% block base_css %}
+{{block.super}}
+{% endblock base_css %}
+{% block breadcrumbbar %}
+<div class="breadcrumbbar bg-transparent ">
+
+</div>
+{% endblock breadcrumbbar %}
+
+
+<!-- End Contentbar -->
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+        {% comment %} <h6>
+        <a href="{% url 'users:ore-user' %}">Get ORE User</a>
+        </h6>        
+        
+        <h6>
+        <a href="{% url 'users:ore-token' %}">Get ORE App Token</a>
+        </h6>        
+        
+        <h6>
+        <a href="{% url 'users:create-ore-user' %}">ORE Create user</a>
+        </h6> {% endcomment %}
+        <h6 class="mt-4">
+        <a href="/api/">API ENDPOINTS</a>
+        </h6>
+        </div>
+        <div class="col">
+        {{ore_data}}
+        </div>
+        <div class="col-12">
+        {% for k,v in ore_data.items %}
+        <h6>{{k}} : {{v}}</h6>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}

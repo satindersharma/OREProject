@@ -1,0 +1,10 @@
+{
+    "python.pythonPath": "venv/bin/python",
+    "python.linting.enabled":true,
+    "editor.mouseWheelScrollSensitivity": 3,
+    "editor.fastScrollSensitivity": 10,
+    "editor.largeFileOptimizations": false,
+    "emmet.includeLanguages": {
+      "django-html": "html"
+    },
+}
