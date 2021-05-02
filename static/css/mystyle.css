@@ -657,5 +657,13 @@ div.dataTables_scrollBody {
 }
 
 
-
+.lines{
+  border-top: 3px solid #37c4cd;
+  height: 5px;   
+  width: 70px;
+  margin: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 20%;
+}
 

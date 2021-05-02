@@ -17,7 +17,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
-        {% comment %} <h6>
+        <h6>
         <a href="{% url 'users:ore-user' %}">Get ORE User</a>
         </h6>        
         
@@ -27,19 +27,185 @@
         
         <h6>
         <a href="{% url 'users:create-ore-user' %}">ORE Create user</a>
-        </h6> {% endcomment %}
+        </h6> 
+
+        <h6>
+        <a href="{% url 'users:ore-email-code-send' %}">ORE Passwordless Login</a>
+        </h6>   
+
         <h6 class="mt-4">
         <a href="/api/">API ENDPOINTS</a>
         </h6>
-        </div>
-        <div class="col">
-        {{ore_data}}
         </div>
         <div class="col-12">
         {% for k,v in ore_data.items %}
         <h6>{{k}} : {{v}}</h6>
         {% endfor %}
+        </div>   
+
+
+        {% if ore_data %}
+
+
+        <div class="card">
+            <div class="card-header">
+            <h3>ORE User Details  </h3>
+
+            </div>
+            <div class="card-body">
+            
+                <div class="col-12">
+                    <h6> processId : {{ore_data.processId}}</h6>
+                    <h6> accountName : {{ore_data.accountName}}</h6>
+                    <h6> email : {{ore_data.email}}</h6>
+                    <h6> picture : {{ore_data.picture}}</h6>
+                    <h6> name : {{ore_data.name}}</h6>
+                    <h6> username : {{ore_data.username}}</h6>
+                    <h6 > permissions :
+                        <div class="col">
+                            {% for p in ore_data.permissions %}
+                            
+                            <p>chainNetwork : {{p.chainNetwork}}</p>
+                            <p>chainAccount : {{p.chainAccount}}</p>
+                            <p>permissionName : {{p.permissionName}}</p>
+                            <p>publicKey : {{p.publicKey}}</p>
+                            <p>privateKeyStoredExterally : {{p.privateKeyStoredExterally}}</p>
+                            <p>externalWalletType : {{p.externalWalletType}}</p>
+                            <p>accountType : {{p.accountType}}</p>
+                            <p>permission : {{p.permission}}</p>
+
+
+                            {% endfor %}
+                        </div> 
+                    </h6>
+                </div> 
+            
+            </div>
         </div>
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">User Info<div class="lines"></div>
+                            </h4>
+                            <p class="card-text text-dark">
+                                <div class="col-md-12">
+                                    <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">processId</th>
+                                        <td scope="col">{{ore_data.processId}}</td>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">accountName</th>
+                                        <td scope="col">{{ore_data.accountName}}</td>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">email</th>
+                                        <td scope="col">{{ore_data.email}}</td>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">picture</th>
+                                        <td scope="col">{{ore_data.picture}}</td>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">name</th>
+                                        <td scope="col">{{ore_data.name}}</td>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">username</th>
+                                        <td scope="col">{{ore_data.username}}</td>
+                                    </tr>
+                                </thead>
+                                
+                            </table>
+                            </p> <!-- p class="card-text" -->
+                        </div> <!-- class="card-body" -->
+
+                        <div class="card-body">
+                            <h4 class="card-title">User Permission<div class="lines"></div>
+                            </h4>
+                            <p class="card-text">
+                                <div class="col-md-12">
+                                    <table class="table table-borderless">
+                                    {% for p in ore_data.permissions %}
+                                <thead>
+                                    <tr>
+                                        <th scope="col">chainNetwork</th>
+                                        <td scope="col">{{p.chainNetwork}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">chainAccount</th>
+                                        <td scope="col">{{p.chainAccount}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">permissionName</th>
+                                        <td scope="col">{{p.permissionName}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">publicKey</th>
+                                        <td scope="col">{{p.publicKey}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">privateKeyStoredExterally</th>
+                                        <td scope="col">{{p.privateKeyStoredExterally}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">externalWalletType</th>
+                                        <td scope="col">{{p.externalWalletType}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">accountType</th>
+                                        <td scope="col">{{p.accountType}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                <thead>
+                                    <tr>
+                                        <th scope="col">permission</th>
+                                        <td scope="col">{{p.permission}}</td>
+                                    </tr>
+                                </thead>
+                                
+                                 {% endfor %}
+                            </table>
+                            </p> <!-- p class="card-text" -->
+                        </div> <!-- class="card-body" -->
+
+                    </div>
+
+
+
+
+{% endif %}
     </div>
 </div>
 

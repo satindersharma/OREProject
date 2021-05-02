@@ -7,6 +7,12 @@ from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 import uuid
+from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
+from users.qr_code import qr_code_generator,qr_code_svg_generator
+from django.core.files import File
+from django.core.files.base import ContentFile
+from PIL import Image, ImageDraw
+from io import BytesIO
 # Create your models here.
 
 '''
@@ -155,3 +161,50 @@ class Order(models.Model):
         Returns the string representation of the order object.
         '''
         return str(self.uid)
+
+
+class BarcodeImage(models.Model):
+    url = models.URLField(max_length=512)
+    image = models.ImageField(blank=True,upload_to="barcode-img",)
+    svg = models.FileField(blank=True, upload_to="barcode-svg",
+                             validators=[FileExtensionValidator(['svg', 'png', 'jpg', 'jpeg'])])
+
+    def __str__(self):
+        return f"url with length {len(self.url)}"
+
+# generate svg if not created when a new barcode created
+# this may be case
+def generate_img_svg(sender, instance, created, **kwargs):
+
+    if created:
+        if instance.image == "":
+            img = qr_code_generator(instance.url)
+            canvas = Image.new('RGB', (340, 340), 'white')
+            draw = ImageDraw.Draw(canvas)
+            canvas.paste(img)
+            fname = str(uuid.uuid1()) + '.png'
+            # buffer = BytesIO()
+            # canvas.save(buffer, 'PNG')
+
+            instance.image.save(fname, File(canvas),save=True)
+        # if instance.image == "":
+        #     h = "https://satyam.pythonanywhere.com/blog/being-able-debug-great-tool-when-learning-new-programming-content-tutorial-will-facilitate-how-debug-using-visual-studio-vs-code-which-can-be-used-all-code-samples/"
+        #     qr = qr_code_generator(instance.url)
+        #     fname = str(uuid.uuid1()) + '.png'
+        #     content = File(file=qr,name=fname)
+
+        #     instance.image.save(fname, content, save=True)
+        #     print('new image created')
+
+
+        # if instance.svg == "":
+        #     qr = qr_code_svg_generator(instance.url)
+        #     fname = str(uuid.uuid1()) + '.svg'
+        #     content = qr.save(fname)
+
+        #     instance.svg.save(fname,
+        #                         content, save=True)
+        #     print('new svg created')
+
+# attached a post save signal to the barcode model
+post_save.connect(generate_img_svg, sender=BarcodeImage)

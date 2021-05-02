@@ -1,4 +1,5 @@
 from django import forms
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -15,6 +16,8 @@ from django.utils.translation import gettext_lazy as _
 from users.models import UserProfile
 # from django.conf import settings
 # USER = settings.AUTH_USER_MODEL
+from users.ore import OREMixin
+from django.utils.html import html_safe, escape, format_html, mark_safe
 '''
 class SignUpForm(UserCreationForm):
 	username = forms.CharField(
@@ -230,3 +233,27 @@ class OREUserCreateForm(forms.Form):
     # def clean_picture(self):
     #     picture = self.cleaned_data.get('picture')
     #     return picture if picture else ''
+
+
+class OREPasswordlessLoginForm(forms.Form):
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={ "placeholder": "email", "class": "form-control" } ))
+
+class OREPasswordlessLoginVerifyCodeForm(forms.Form, OREMixin):
+    email = forms.EmailField(required=True, widget=forms.HiddenInput)
+
+    code = forms.CharField(required=True,min_length=6,max_length=6,widget=forms.TextInput(attrs={"placeholder":"Enter Code","class":"form-control"}))
+
+    def clean(self):
+        email = self.cleaned_data.get('email',None)
+        code = self.cleaned_data.get('code',None)
+        print('email',email,'code',code)
+        if email is None:
+            msg = _(mark_safe('Please Enter email first. <a href="{}">click here</a>'.format(reverse('users:ore-email-code-send'))))
+            self.add_error('code', msg)  
+        if email and code:
+            res = self.verify_login_code(email=email,code=code)
+            # res = {}
+            print(res)
+            if not res.get('success'):
+                msg = _("Please provide valid code.")
+                self.add_error('code', msg)

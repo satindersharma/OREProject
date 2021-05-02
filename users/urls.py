@@ -1,13 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import (SignUpView, UserLoginView, UserLogoutView, CustomPasswordResetView,UserProfileView, 
-DeleteProfileImage, Home, GetOREUserView,GetOREAppTokenView,CreateOREUserView)
+DeleteProfileImage, Home, GetOREUserView,GetOREAppTokenView,CreateOREUserView, OREPasswordlessLoginView, OREPasswordlessLoginVerifyCodeView)
 app_name = 'users'
 urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('get-user/', GetOREUserView.as_view(), name='ore-user'),
     path('create-ore-user/', CreateOREUserView.as_view(), name='create-ore-user'),
     path('get-ore-token/', GetOREAppTokenView.as_view(), name='ore-token'),
+    path('ore-email-code-send/', OREPasswordlessLoginView.as_view(), name='ore-email-code-send'),
+    path('ore-verify-code/', OREPasswordlessLoginVerifyCodeView.as_view(), name='ore-verify-code'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('profile/', UserProfileView.as_view(), name='user-profile'),

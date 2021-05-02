@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 # from django.contrib.auth.models import Permission, Group, PermissionsMixin
-from .models import CustomUser, UserProfile
+from .models import CustomUser, UserProfile, BarcodeImage
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext, gettext_lazy as _
 from django.utils.text import Truncator
@@ -28,6 +28,8 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
-
+class CustomBarcodeImageAdmin(admin.ModelAdmin):
+    list_display = ('__str__','image')
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(BarcodeImage, CustomBarcodeImageAdmin)

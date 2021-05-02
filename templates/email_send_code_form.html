@@ -1,0 +1,43 @@
+{% extends "home.html" %} {% load static %}
+{% block title %}ORE Passwordless Login{% endblock title %}
+{% block breadcrumbbar %}
+
+<!-- Start Breadcrumbbar -->
+
+<div class="breadcrumbbar bg-transparent">
+</div>
+
+<!-- End Breadcrumbbar -->
+
+{% endblock breadcrumbbar %}
+
+
+{% block content %}
+<div class="contentbar dark-outer-color-theme pt-5">
+  <div class="row justify-content-center dark-outer-color-theme">
+ 
+
+<form  method="post" accept-charset="utf-8"  class="col"
+    action="{% url 'users:ore-email-code-send' %}"
+    autocomplete="off">
+    <div class="card details-card bgc-none">
+        <h2 class="card-header header-bgc header-box-shadow py-0">Enter Your Email</h2>
+
+        <div class="card-body py-0 ">
+            {% csrf_token %}
+            <div class="form-row dark-theme-text">
+                {% include 'form_repeat.html' with f=form.email f_label="Email" col_md="4"  exclass="m-0" %}
+                <div class="form-group col-md-4 m-0 text-center">
+                    <label for="" class="col-sm-12  col-form-label font-weight-bold text-nowrap dark-theme-text">Send Code</label>
+                    <input type="submit" class="btn btn-block btn-outline-primary" value="Send Code">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% extends "home.html" %} {% load static %}
+{% block title %}ORE Passwordless Login Verify Code{% endblock title %}
+{% block breadcrumbbar %}
+
+<!-- Start Breadcrumbbar -->
+
+<div class="breadcrumbbar bg-transparent">
+</div>
+
+<!-- End Breadcrumbbar -->
+
+{% endblock breadcrumbbar %}
+
+
+{% block content %}
+<div class="contentbar dark-outer-color-theme pt-5">
+  <div class="row justify-content-center dark-outer-color-theme">
+ 
+<div class="col-12 text-dark "><h3>{{code_response.message}}</h3></div>
+<form  method="post" accept-charset="utf-8"  class="col"
+    action="{% url 'users:ore-verify-code' %}"
+    autocomplete="off">
+    <div class="card details-card bgc-none">
+        <h2 class="card-header header-bgc header-box-shadow py-0">Enter Verification code</h2>
+
+        <div class="card-body py-0 ">
+            {% csrf_token %}
+            {{form.email}}
+            <div class="form-row dark-theme-text">
+                {% include 'form_repeat.html' with f=form.code f_label="Enter Code" col_md="4"  exclass="m-0" %}
+                <div class="form-group col-md-4 m-0 text-center">
+                    <label for="" class="col-sm-12  col-form-label font-weight-bold text-nowrap dark-theme-text">Verify</label>
+                    <input type="submit" class="btn btn-block btn-outline-primary" value="Verify">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+  </div>
+</div>
+
+{% endblock content %}

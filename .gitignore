@@ -5,7 +5,7 @@ vme/**
 venv/
 venv/**
 media/userprofile
-
+media/barcode-img
 __pycache__/
 *.py[cod]
 *$py.class
